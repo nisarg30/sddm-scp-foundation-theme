@@ -53,27 +53,6 @@ Rectangle {
     property color paletteSuccess: "#00FF00"
     property color paletteGreen: "#00AA00"
     
-    readonly property real baseWidth: 1920
-    readonly property real baseHeight: 1080
-    readonly property real scaleFactor: Math.min(width / baseWidth, height / baseHeight)
-    readonly property real scaleFactorX: width / baseWidth
-    readonly property real scaleFactorY: height / baseHeight
-    readonly property real minScale: 0.6
-    readonly property real maxScale: 2.0
-    readonly property real safeScale: Math.max(minScale, Math.min(maxScale, scaleFactor))
-    
-    function scaleSize(size) {
-        return Math.max(8, Math.round(size * safeScale))
-    }
-    
-    function scaleSizeX(size) {
-        return Math.max(8, Math.round(size * Math.max(minScale, Math.min(maxScale, scaleFactorX))))
-    }
-    
-    function scaleSizeY(size) {
-        return Math.max(8, Math.round(size * Math.max(minScale, Math.min(maxScale, scaleFactorY))))
-    }
-    
     function loadColorsFromConfig() {
         try {
             var url = Qt.resolvedUrl("../config.toml")
@@ -447,11 +426,11 @@ Rectangle {
         }
     }
     
-    Row {
+        Row {
         id: mainContent
         anchors.fill: parent
-        anchors.margins: scaleSize(60)
-        spacing: scaleSize(80)
+        anchors.margins: Math.max(20, Math.min(80, width * 0.03))
+        spacing: Math.max(30, Math.min(80, width * 0.03))
         
         transform: Translate {
             x: glitchContainer.offsetX
@@ -459,17 +438,17 @@ Rectangle {
         }
         
         Item {
-            width: parent.width * 0.40
+            width: Math.max(400, parent.width * 0.38)
             height: parent.height
             
             Column {
                 anchors.centerIn: parent
-                spacing: scaleSize(40)
+                spacing: Math.max(30, Math.min(80, height * 0.06))
                 
                 Column {
                     id: brandingTitleColumn
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: scaleSize(8)
+                    spacing: Math.max(4, Math.min(12, height * 0.01))
 
                     Item {
                         width: mainTitle.font.pixelSize * 1.5
@@ -511,7 +490,7 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "SCP FOUNDATION"
                         font.family: "JetBrains Mono"
-                        font.pixelSize: scaleSize(42)
+                        font.pixelSize: Math.max(32, Math.min(80, height * 0.065))
                         font.bold: true
                         font.letterSpacing: -1
                         font.kerning: false
@@ -536,7 +515,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: "ANTIMEMETICS DIVISION"
                     font.family: "JetBrains Mono"
-                    font.pixelSize: scaleSize(18)
+                    font.pixelSize: Math.max(16, Math.min(36, height * 0.025))
                     font.letterSpacing: -1
                     font.kerning: false
                     renderType: Text.NativeRendering
@@ -545,8 +524,8 @@ Rectangle {
                 }
                 
                 Item {
-                    width: scaleSize(320)
-                    height: scaleSize(320)
+                    width: Math.max(280, Math.min(600, height * 0.45))
+                    height: Math.max(280, Math.min(600, height * 0.45))
                     anchors.horizontalCenter: parent.horizontalCenter
                     
                     Image {
@@ -616,8 +595,8 @@ Rectangle {
                 }
                 
                 Rectangle {
-                    width: scaleSize(300)
-                    height: Math.max(1, scaleSizeY(2))
+                    width: Math.max(200, Math.min(400, parent.parent.width * 0.8))
+                    height: Math.max(1, Math.min(3, height * 0.002))
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: "#8B0000"
                     opacity: 0.5
@@ -627,7 +606,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: "SECURITY CLEARANCE REQUIRED"
                     font.family: "JetBrains Mono"
-                    font.pixelSize: scaleSize(14)
+                    font.pixelSize: Math.max(14, Math.min(26, height * 0.018))
                     color: "#CCCCCC"
                     opacity: 0.7
                 }
@@ -635,26 +614,26 @@ Rectangle {
         }
         
         Item {
-            width: parent.width * 0.60 - scaleSize(80)
+            width: parent.width - (parent.width * 0.38) - parent.spacing
             height: parent.height
             
             Column {
-                anchors.top: parent.top
+                anchors.fill: parent
                 width: parent.width
-                spacing: scaleSize(30)
+                spacing: Math.max(25, Math.min(70, height * 0.05))
                 
                 Rectangle {
                     width: parent.width
-                    height: warningColumn.height + scaleSize(40)
+                    height: warningColumn.height + Math.max(20, Math.min(60, height * 0.04))
                     color: Qt.tint(paletteBackground, Qt.rgba(0.54, 0, 0, 0.1))
                     border.color: paletteBrand
-                    border.width: Math.max(1, scaleSizeY(2))
+                    border.width: Math.max(1, Math.min(3, height * 0.002))
                     
                     Column {
                         id: warningColumn
                         anchors.centerIn: parent
-                        width: parent.width - scaleSize(40)
-                        spacing: scaleSize(15)
+                        width: parent.width - Math.max(20, Math.min(60, width * 0.02))
+                        spacing: Math.max(8, Math.min(20, height * 0.015))
                         
                         Text {
                             id: warnHeader
@@ -664,7 +643,7 @@ Rectangle {
                             width: parent.width
                             text: "⚠ RESTRICTED ACCESS ⚠"
                             font.family: "Monospace"
-                            font.pixelSize: scaleSize(24)
+                            font.pixelSize: Math.max(22, Math.min(48, height * 0.032))
                             font.bold: true
                             color: paletteDanger
                             horizontalAlignment: Text.AlignHCenter
@@ -684,7 +663,7 @@ Rectangle {
                             width: parent.width
                             text: warningMessages[0]
                             font.family: "Monospace"
-                            font.pixelSize: scaleSize(12)
+                            font.pixelSize: Math.max(9, Math.min(18, height * 0.012))
                             color: paletteAccent
                             wrapMode: Text.WordWrap
                             horizontalAlignment: Text.AlignHCenter
@@ -703,7 +682,7 @@ Rectangle {
                 
                 Column {
                     width: parent.width
-                    spacing: scaleSize(8)
+                    spacing: Math.max(6, Math.min(16, height * 0.012))
                     
                     Repeater {
                         model: 6
@@ -715,7 +694,7 @@ Rectangle {
                             width: parent.width
                             text: ""
                             font.family: "Monospace"
-                            font.pixelSize: scaleSize(11)
+                            font.pixelSize: Math.max(11, Math.min(20, height * 0.015))
                             color: paletteSuccess
                             opacity: 0.8
                             
@@ -755,18 +734,18 @@ Rectangle {
                 
                 Rectangle {
                     width: parent.width
-                    height: Math.max(1, scaleSizeY(1))
+                    height: Math.max(1, Math.min(2, height * 0.001))
                     color: paletteBorder
                 }
                 
                 Column {
                     width: parent.width
-                    spacing: scaleSize(20)
+                    spacing: Math.max(10, Math.min(30, height * 0.02))
                     
                     Text {
                         text: "ANTIMEMETIC DIVISION TERMINAL"
                         font.family: "JetBrains Mono"
-                        font.pixelSize: scaleSize(18)
+                        font.pixelSize: Math.max(16, Math.min(36, height * 0.025))
                         font.bold: true
                         color: "#CCCCCC"
                     }
@@ -774,32 +753,32 @@ Rectangle {
                     Text {
                         text: "SITE-41 MNESTIC INTERFACE v4.7.2"
                         font.family: "JetBrains Mono"
-                        font.pixelSize: scaleSize(11)
+                        font.pixelSize: Math.max(11, Math.min(20, height * 0.015))
                         color: "#888888"
                     }
                     
                     Row {
-                        spacing: scaleSize(10)
+                        spacing: Math.max(5, Math.min(15, width * 0.005))
                         
                         Text {
                             text: "USER>"
                             font.family: "JetBrains Mono"
-                            font.pixelSize: scaleSize(16)
+                            font.pixelSize: Math.max(16, Math.min(32, height * 0.022))
                             color: paletteAccent
                             anchors.verticalCenter: parent.verticalCenter
                             verticalAlignment: Text.AlignVCenter
                         }
                         
                         Item {
-                            width: scaleSizeX(400)
-                            height: scaleSizeY(35)
+                            width: Math.max(350, Math.min(700, width * 0.25))
+                            height: Math.max(36, Math.min(60, height * 0.045))
                             
                             Rectangle { anchors.fill: parent; color: "transparent" }
                             Rectangle {
                                 anchors.left: parent.left
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom
-                                height: Math.max(1, scaleSizeY(1))
+                                height: Math.max(1, Math.min(2, height * 0.001))
                                 color: userInput.activeFocus ? paletteAccent : paletteLine
                             }
                             
@@ -808,10 +787,10 @@ Rectangle {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.verticalCenterOffset: -1
                                 anchors.left: parent.left
-                                anchors.leftMargin: scaleSize(8)
-                                width: parent.width - scaleSize(16)
+                                anchors.leftMargin: Math.max(4, Math.min(12, width * 0.004))
+                                width: parent.width - Math.max(8, Math.min(24, width * 0.008))
                                 font.family: "JetBrains Mono"
-                                font.pixelSize: scaleSize(16)
+                                font.pixelSize: Math.max(16, Math.min(32, height * 0.022))
                                 color: paletteText
                                 selectionColor: paletteAccent
                                 selectedTextColor: "#000000"
@@ -847,7 +826,7 @@ Rectangle {
                                 visible: userInput.activeFocus
                                 width: userInput.font.pixelSize * 0.6
                                 height: userInput.cursorRectangle.height
-                                x: scaleSize(8) + userInput.cursorRectangle.x
+                                x: Math.max(4, Math.min(12, width * 0.004)) + userInput.cursorRectangle.x
                                 y: (parent.height - userInput.cursorRectangle.height)/2 + userInput.cursorRectangle.y - 1
                                 color: paletteAccent
                                 
@@ -863,13 +842,13 @@ Rectangle {
                     
                     Row {
                         id: passwordRow
-                        spacing: scaleSize(10)
+                        spacing: Math.max(5, Math.min(15, width * 0.005))
                         property bool showPassword: false
                         
                         Text {
                             text: "AUTH>"
                             font.family: "JetBrains Mono"
-                            font.pixelSize: scaleSize(16)
+                            font.pixelSize: Math.max(16, Math.min(32, height * 0.022))
                             color: paletteAccent
                             anchors.verticalCenter: parent.verticalCenter
                             verticalAlignment: Text.AlignVCenter
@@ -877,15 +856,15 @@ Rectangle {
                         
                         Item {
                             id: passwordInputContainer
-                            width: scaleSizeX(400)
-                            height: scaleSizeY(35)
+                            width: Math.max(350, Math.min(700, width * 0.25))
+                            height: Math.max(36, Math.min(60, height * 0.045))
                             
                             Rectangle { anchors.fill: parent; color: "transparent" }
                             Rectangle {
                                 anchors.left: parent.left
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom
-                                height: Math.max(1, scaleSizeY(1))
+                                height: Math.max(1, Math.min(2, height * 0.001))
                                 color: passwordInput.activeFocus ? paletteAccent : paletteLine
                             }
                             
@@ -904,10 +883,10 @@ Rectangle {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.verticalCenterOffset: -1
                                 anchors.left: parent.left
-                                anchors.leftMargin: scaleSize(8)
-                                width: parent.width - scaleSize(16)
+                                anchors.leftMargin: Math.max(4, Math.min(12, width * 0.004))
+                                width: parent.width - Math.max(8, Math.min(24, width * 0.008))
                                 font.family: "JetBrains Mono"
-                                font.pixelSize: scaleSize(16)
+                                font.pixelSize: Math.max(16, Math.min(32, height * 0.022))
                                 color: passwordRow.showPassword ? paletteText : "transparent"
                                 echoMode: TextInput.Normal
                                 selectionColor: paletteAccent
@@ -940,13 +919,13 @@ Rectangle {
                             Text {
                                 id: passwordMask
                                 anchors.left: parent.left
-                                anchors.leftMargin: scaleSize(8)
+                                anchors.leftMargin: Math.max(4, Math.min(12, width * 0.004))
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.verticalCenterOffset: -1
-                                width: parent.width - scaleSize(16)
+                                width: parent.width - Math.max(8, Math.min(24, width * 0.008))
                                 text: ""
                                 font.family: "JetBrains Mono"
-                                font.pixelSize: scaleSize(16)
+                                font.pixelSize: Math.max(16, Math.min(32, height * 0.022))
                                 color: paletteText
                                 visible: !passwordRow.showPassword
                                 horizontalAlignment: Text.AlignLeft
@@ -958,7 +937,7 @@ Rectangle {
                                 visible: passwordInput.activeFocus
                                 width: passwordInput.font.pixelSize * 0.6
                                 height: passwordInput.cursorRectangle.height
-                                x: scaleSize(8) + passwordInput.cursorRectangle.x
+                                x: Math.max(4, Math.min(12, width * 0.004)) + passwordInput.cursorRectangle.x
                                 y: (parent.height - passwordInput.cursorRectangle.height)/2 + passwordInput.cursorRectangle.y - 1
                             color: paletteAccent
                                 
@@ -972,17 +951,17 @@ Rectangle {
                         }
                         
                         Rectangle {
-                            width: scaleSizeX(110)
-                            height: scaleSizeY(35)
+                            width: Math.max(80, Math.min(150, width * 0.055))
+                            height: Math.max(36, Math.min(60, height * 0.045))
                             color: "transparent"
                             border.color: paletteBrand
-                            border.width: Math.max(1, scaleSizeY(1))
+                            border.width: Math.max(1, Math.min(2, height * 0.001))
                             
                             Text {
                                 anchors.centerIn: parent
                                 text: passwordRow.showPassword ? "[ HIDE ]" : "[ SHOW ]"
                                 font.family: "Monospace"
-                                font.pixelSize: scaleSize(12)
+                                font.pixelSize: Math.max(12, Math.min(24, height * 0.016))
                                 color: paletteAccent
                                 font.bold: true
                             }
@@ -1003,11 +982,11 @@ Rectangle {
                     
                     Rectangle {
                         id: loginButton
-                        width: scaleSizeX(200)
-                        height: scaleSizeY(45)
+                        width: Math.max(180, Math.min(360, width * 0.12))
+                        height: Math.max(44, Math.min(72, height * 0.055))
                         color: loginMouseArea.containsMouse ? Qt.darker(paletteBrand, 1.25) : paletteBrand
                         border.color: paletteDanger
-                        border.width: Math.max(1, scaleSizeY(2))
+                        border.width: Math.max(1, Math.min(3, height * 0.002))
                         
                         property bool isProcessing: false
                         
@@ -1015,7 +994,7 @@ Rectangle {
                             anchors.centerIn: parent
                             text: loginButton.isProcessing ? "AUTHENTICATING..." : "[ AUTHENTICATE ]"
                             font.family: "Monospace"
-                            font.pixelSize: scaleSize(14)
+                            font.pixelSize: Math.max(14, Math.min(26, height * 0.018))
                             font.bold: true
                             color: paletteText
                         }
@@ -1069,7 +1048,7 @@ Rectangle {
                         visible: false
                         text: "AUTHENTICATION FAILED - ACCESS DENIED"
                             font.family: "JetBrains Mono"
-                        font.pixelSize: scaleSize(14)
+                        font.pixelSize: Math.max(14, Math.min(26, height * 0.018))
                         font.bold: true
                             color: paletteDanger
                         
@@ -1116,7 +1095,7 @@ Rectangle {
                 
                 Rectangle {
                     width: parent.width
-                    height: Math.max(1, scaleSizeY(1))
+                    height: Math.max(1, Math.min(2, height * 0.001))
                     color: paletteBorder
                 }
                 
@@ -1125,7 +1104,7 @@ Rectangle {
                     width: parent.width
                     text: ambientFragments[0]
                     font.family: "JetBrains Mono"
-                    font.pixelSize: scaleSize(10)
+                    font.pixelSize: Math.max(11, Math.min(18, height * 0.014))
                     color: paletteTextSubtle
                     opacity: 0.6
                     horizontalAlignment: Text.AlignRight
@@ -1162,6 +1141,11 @@ Rectangle {
                             duration: 400
                         }
                     }
+                }
+                
+                Item {
+                    width: parent.width
+                    height: Math.max(40, height * 0.25)
                 }
             }
         }
@@ -1261,20 +1245,20 @@ Rectangle {
     Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
-        height: scaleSizeY(30)
+        height: Math.max(24, Math.min(40, height * 0.03))
                     color: palettePanel
                     border.color: paletteBorder
-        border.width: Math.max(1, scaleSizeY(1))
+        border.width: Math.max(1, Math.min(2, height * 0.001))
         
         Row {
             anchors.fill: parent
-            anchors.margins: scaleSize(5)
-            spacing: scaleSize(20)
+            anchors.margins: Math.max(3, Math.min(8, height * 0.005))
+            spacing: Math.max(10, Math.min(30, width * 0.01))
             
             Text {
                 text: "SYSTEM TIME: " + Qt.formatDateTime(new Date(), "yyyy-MM-dd HH:mm:ss")
                 font.family: "Monospace"
-                font.pixelSize: scaleSize(10)
+                font.pixelSize: Math.max(8, Math.min(14, height * 0.01))
                 color: paletteTextMuted
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -1282,7 +1266,7 @@ Rectangle {
             Text {
                 text: "| REALITY ANCHOR: STABLE"
                 font.family: "JetBrains Mono"
-                font.pixelSize: scaleSize(10)
+                font.pixelSize: Math.max(8, Math.min(14, height * 0.01))
                 color: paletteGreen
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -1290,7 +1274,7 @@ Rectangle {
             Text {
                 text: "| MEMETIC HAZARDS: FILTERED"
                 font.family: "JetBrains Mono"
-                font.pixelSize: scaleSize(10)
+                font.pixelSize: Math.max(8, Math.min(14, height * 0.01))
                 color: paletteGreen
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -1302,10 +1286,10 @@ Rectangle {
         visible: false
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.margins: scaleSize(20)
+        anchors.margins: Math.max(10, Math.min(30, width * 0.01))
         text: "[SAFE MODE]"
         font.family: "JetBrains Mono"
-        font.pixelSize: scaleSize(12)
+        font.pixelSize: Math.max(9, Math.min(18, height * 0.012))
         color: paletteSuccess
         opacity: 0.7
     }
