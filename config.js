@@ -1,0 +1,20 @@
+var __themeColors = {
+  // Base
+  background: "#000000",
+  panel: "#0a0a0a",
+  border: "#333333",
+  line: "#444444",
+  
+  // Brand & accents
+  brand: "#8B0000",
+  accent: "#FF6B00",
+  danger: "#FF0000",
+  success: "#00FF00",
+  green: "#00AA00",
+  
+  // Text
+  text: "#FFFFFF",
+  text_light: "#CCCCCC",
+  text_muted: "#888888",
+  text_subtle: "#666666"
+};

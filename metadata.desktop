@@ -1,0 +1,15 @@
+[SddmGreeterTheme]
+Name=SCP Terminal
+Description=SCP Foundation Antimemetics Division terminal-style login theme with CRT effects
+Author=Ghost Bot
+Copyright=(CC BY-SA 4.0) 2025
+License=CC-BY-SA-4.0
+Type=sddm-theme
+Version=1.0
+Website=
+MainScript=qml/Main.qml
+ConfigFile=theme.conf
+Screenshot=screenshot.png
+Theme-Id=scp_terminal
+Theme-API=2.0
+
